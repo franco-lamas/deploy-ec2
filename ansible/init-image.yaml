@@ -1,0 +1,53 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Update packages
+      apt:
+        update_cache: true
+        upgrade: dist
+        force_apt_get: true  
+    - name: "Install Apache server"
+      apt:
+        pkg:
+          - apache2
+          - ufw
+          - snap
+        state: present
+    - name: "Create document root"
+      file:
+        path: "/var/www/html"
+        state: directory
+        owner: "www-data"
+        mode: 0755
+    - name: "Enable Apache on Firewall"
+      ufw:
+        rule: allow
+        port: 80
+        proto: tcp
+    - name: "restart apache2 service"
+      service:
+        name: apache2
+        state: restarted
+
+    - name: Import PPA repository
+      ansible.builtin.command: sudo LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php -y
+      register: myoutput
+      changed_when: myoutput.rc != 0
+
+
+    - name: Update packages  after Import
+      apt:
+        update_cache: true
+        force_apt_get: true 
+
+
+    - name: "Install PHP and MySQL Client"
+      apt:
+        pkg:
+          - php7.4-mysql
+          - php7.4-mbstring
+          - php7.4-xml
+          - php7.4-curl
+          - mysql-client 
+        state: present
