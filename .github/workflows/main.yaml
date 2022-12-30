@@ -89,7 +89,7 @@ jobs:
         username: ${{ secrets.USERNAME_PRODUCTION }}
         key: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
         port: 22
-        script: sudo rm -r ${{ secrets.TARGET_DIR_PRODUCTION }}
+        script: sudo rm -r ${{ secrets.TARGET_DIR_PRODUCTION }} && mkdir ${{ secrets.TARGET_DIR_PRODUCTION }}
 
     - name: Checkout the files
       uses: actions/checkout@v2
