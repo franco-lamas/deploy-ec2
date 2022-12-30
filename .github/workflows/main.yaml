@@ -85,7 +85,7 @@ jobs:
         username: ${{ secrets.USERNAME_PRODUCTION }}
         key: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
         port: 22
-        script: rm -rf ${{ secrets.TARGET_DIR_PRODUCTION }} && mkdir ${{ secrets.TARGET_DIR_PRODUCTION }}
+        script: cd ${{ secrets.TARGET_DIR_PRODUCTION }} && rm -rf  *
 
     - name: Checkout the files
       uses: actions/checkout@v2
