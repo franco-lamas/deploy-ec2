@@ -1,2 +1,3 @@
 bin/
 .env
+ansible/dev-testing-key.pem
