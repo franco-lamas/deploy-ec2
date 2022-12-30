@@ -91,7 +91,7 @@ jobs:
       with:
         local: src
         remote: ${{ secrets.TARGET_DIR_PRODUCTION }} 
-        host: deploy-ec2-test.duckdns.org
+        host: ${{ secrets.HOST_DNS_PRODUCTION }}
         username: ${{ secrets.USERNAME_PRODUCTION }}
         privateKey: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
         rmRemote: true
