@@ -98,29 +98,22 @@ jobs:
 
 
   deploy-to-prod:
-    name: Copy files to AWS EC2 Production
+    name: Copy files to AWS EC2 Testing
     runs-on: ubuntu-22.04
     needs: [gitleaks,copy_paste_detector,phpstan,php_lint]
     environment: 
       name: prod
-      url: http://deploy-ec2-prod.duckdns.org/
+      url: http://deploy-ec2-test.duckdns.org/
     steps:
-    - name: executing remote ssh commands using ssh key
-      uses: appleboy/ssh-action@v0.1.6
-      with:
-        host: ${{ secrets.HOST_DNS_PRODUCTION }}
-        username: ${{ secrets.USERNAME_PRODUCTION }}
-        key: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
-        port: 22
-        script: cd ${{ secrets.TARGET_DIR_PRODUCTION }} && rm -rf  * 
-
     - name: Checkout the files
       uses: actions/checkout@v2
-    - name: Deploy to Server 1
-      uses: easingthemes/ssh-deploy@main
-      env:
-        SOURCE: "src/"
-        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
-        REMOTE_HOST: ${{ secrets.HOST_DNS_PRODUCTION }}
-        REMOTE_USER: ${{ secrets.USERNAME_PRODUCTION }}
-        TARGET: ${{ secrets.TARGET_DIR_PRODUCTION }}
+    - name: Copy folder content recursively to remote
+      uses: garygrossgarten/github-action-scp@release
+      with:
+        local: src
+        remote: ${{ secrets.TARGET_DIR_PRODUCTION }} 
+        host: ${{ secrets.HOST_DNS_PRODUCTION }}
+        username: ${{ secrets.USERNAME_PRODUCTION }}
+        privateKey: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
+        rmRemote: true
+
