@@ -87,7 +87,7 @@ jobs:
     - name: Checkout the files
       uses: actions/checkout@v2
     - name: Copy single file to remote
-      uses: ArthurYdalgo/github-action-scp@release
+      uses: ArthurYdalgo/github-action-scp@0.7.4
       with:
         local: src
         remote: ${{ secrets.TARGET_DIR_PRODUCTION }} 
