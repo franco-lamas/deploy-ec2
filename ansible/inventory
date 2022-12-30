@@ -1,7 +1,9 @@
 [aws-ec2]
-18.207.218.131
+deploy-ec2-test.duckdns.org
+deploy-ec2-prod.duckdns.org
+
 
 [aws-ec2:vars]
 ansible_user=ubuntu
-ansible_ssh_private_key_file=aws-key
+ansible_ssh_private_key_file=dev-testing-key.pem
 ansible_python_interpreter=/usr/bin/python3
