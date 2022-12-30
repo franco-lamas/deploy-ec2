@@ -3,10 +3,14 @@ name: DevOps With Testing and Production
 
 on:
   push:
-    branches: [ "main","testing" ]
+    branches: 
+    - "main"
+    - "testing" 
 
   pull_request:
-    branches: [ "main"]
+    branches:
+    - "main"
+    - "testing" 
 
   
   workflow_dispatch:
@@ -85,7 +89,7 @@ jobs:
         username: ${{ secrets.USERNAME_PRODUCTION }}
         key: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
         port: 22
-        script: cd ${{ secrets.TARGET_DIR_PRODUCTION }} && rm -rf  *
+        script: sudo rm -r ${{ secrets.TARGET_DIR_PRODUCTION }}
 
     - name: Checkout the files
       uses: actions/checkout@v2
