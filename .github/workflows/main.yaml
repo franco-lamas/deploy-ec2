@@ -82,14 +82,7 @@ jobs:
       name: test
       url: http://deploy-ec2-test.duckdns.org/
     steps:
-    - name: executing remote ssh commands using ssh key
-      uses: appleboy/ssh-action@v0.1.6
-      with:
-        host: ${{ secrets.HOST_DNS_PRODUCTION }}
-        username: ${{ secrets.USERNAME_PRODUCTION }}
-        key: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
-        port: 22
-        script: sudo rm -r ${{ secrets.TARGET_DIR_PRODUCTION }} && sudo mkdir ${{ secrets.TARGET_DIR_PRODUCTION }} && sudo chown ubuntu  ${{ secrets.TARGET_DIR_PRODUCTION }} 
+
 
     - name: Checkout the files
       uses: actions/checkout@v2
@@ -101,6 +94,7 @@ jobs:
         host: ${{ secrets.HOST_DNS_PRODUCTION }}
         username: ${{ secrets.USERNAME_PRODUCTION }}
         privateKey: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
+        rmRemote: true
 
 
   deploy-to-prod:
