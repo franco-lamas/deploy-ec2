@@ -92,6 +92,7 @@ jobs:
     - name: Deploy to Server 1
       uses: easingthemes/ssh-deploy@main
       env:
+        SOURCE: "src/"
         SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
         REMOTE_HOST: ${{ secrets.HOST_DNS_PRODUCTION }}
         REMOTE_USER: ${{ secrets.USERNAME_PRODUCTION }}
