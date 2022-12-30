@@ -3,10 +3,10 @@ name: DevOps With Testing and Production
 
 on:
   push:
-    branches: [ "main","develop" ]
+    branches: [ "main","testing" ]
 
   pull_request:
-    branches: [ "main","develop" ]
+    branches: [ "main"]
 
   
   workflow_dispatch:
