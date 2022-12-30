@@ -81,11 +81,11 @@ jobs:
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v0.1.6
       with:
-        host: ${{ secrets.AWS_HOST }}
-        username: ${{ secrets.AWS_USERNAME }}
-        key: ${{ secrets.AWS_KEY }}
+        host: ${{ secrets.HOST_DNS_PRODUCTION }}
+        username: ${{ secrets.USERNAME_PRODUCTION }}
+        key: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
         port: 22
-        script: rm -rf /var/www/html && mkdir /var/www/html
+        script: rm -rf ${{ secrets.TARGET_DIR_PRODUCTION }} && mkdir ${{ secrets.TARGET_DIR_PRODUCTION }}
 
     - name: Checkout the files
       uses: actions/checkout@v2
