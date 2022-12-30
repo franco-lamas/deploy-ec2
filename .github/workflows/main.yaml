@@ -93,14 +93,15 @@ jobs:
 
     - name: Checkout the files
       uses: actions/checkout@v2
-    - name: Deploy to Server 1
-      uses: easingthemes/ssh-deploy@main
-      env:
-        SOURCE: "src/"
-        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
-        REMOTE_HOST: ${{ secrets.HOST_DNS_PRODUCTION }}
-        REMOTE_USER: ${{ secrets.USERNAME_PRODUCTION }}
-        TARGET: ${{ secrets.TARGET_DIR_PRODUCTION }}
+    - name: Copy folder content recursively to remote
+      uses: garygrossgarten/github-action-scp@release
+      with:
+        local: src
+        remote: ${{ secrets.TARGET_DIR_PRODUCTION }} 
+        host: ${{ secrets.HOST_DNS_PRODUCTION }}
+        username: ${{ secrets.USERNAME_PRODUCTION }}
+        privateKey: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
+
 
   deploy-to-prod:
     name: Copy files to AWS EC2 Production
