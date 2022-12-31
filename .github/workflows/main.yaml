@@ -77,7 +77,7 @@ jobs:
   deploy-to-aws:
     name: Copy files to AWS EC2 Testing
     runs-on: ubuntu-22.04
-    
+    continue-on-error:  ${{ secrets.CONTINUE_ERROR_TEST }}
     needs: [gitleaks,copy_paste_detector,phpstan,php_lint]
     environment: 
       name: test
@@ -100,7 +100,7 @@ jobs:
   deploy-to-Prod:
     name: Copy files to AWS EC2 Prod
     runs-on: ubuntu-22.04
-    
+    continue-on-error: ${{ secrets.CONTINUE_ERROR_TEST }}
     needs: [gitleaks,copy_paste_detector,phpstan,php_lint]
     environment: 
       name: prod
