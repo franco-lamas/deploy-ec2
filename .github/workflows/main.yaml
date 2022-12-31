@@ -22,7 +22,8 @@ jobs:
   deploy-to-aws:
     name: Copy files to AWS EC2 Testing
     runs-on: ubuntu-22.04
-    needs: [gitleaks,copy_paste_detector,phpstan,php_lint]
+    
+    #needs: [gitleaks,copy_paste_detector,phpstan,php_lint]
     environment: 
       name: test
       url: http://deploy-ec2-test.duckdns.org/
@@ -41,7 +42,7 @@ jobs:
   deploy-to-prod:
     name: Copy files to AWS EC2 Testing
     runs-on: ubuntu-22.04
-    needs: [gitleaks,copy_paste_detector,phpstan,php_lint]
+    #needs: [gitleaks,copy_paste_detector,phpstan,php_lint]
     environment: 
       name: prod
       url: http://deploy-ec2-test.duckdns.org/
