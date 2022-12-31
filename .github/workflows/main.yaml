@@ -77,11 +77,11 @@ jobs:
   deploy-to-aws:
     name: Copy files to AWS EC2 Testing
     runs-on: ubuntu-22.04
-    
     needs: [gitleaks,copy_paste_detector,phpstan,php_lint]
     environment: 
       name: test
       url: http://deploy-ec2-test.duckdns.org/
+    if: github.ref == 'refs/heads/testing'
     steps:
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v0.1.6
@@ -100,11 +100,11 @@ jobs:
   deploy-to-Prod:
     name: Copy files to AWS EC2 Prod
     runs-on: ubuntu-22.04
-    
     needs: [gitleaks,copy_paste_detector,phpstan,php_lint]
     environment: 
       name: prod
       url: http://deploy-ec2-prod.duckdns.org/
+    if: github.ref == 'refs/heads/main'
     steps:
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v0.1.6
