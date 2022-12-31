@@ -81,7 +81,7 @@ jobs:
     environment: 
       name: test
       url: http://deploy-ec2-test.duckdns.org/
-    continue-on-error:  ${{ secrets.CONTINUE_ERROR_TEST }}
+    if: github.ref == 'refs/heads/testing'
     steps:
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v0.1.6
@@ -104,7 +104,7 @@ jobs:
     environment: 
       name: prod
       url: http://deploy-ec2-prod.duckdns.org/
-    continue-on-error: ${{ secrets.CONTINUE_ERROR_PROD }}
+    if: github.ref == 'refs/heads/main'
     steps:
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v0.1.6
