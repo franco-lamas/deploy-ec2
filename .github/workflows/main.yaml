@@ -35,7 +35,7 @@ jobs:
         username: ${{ secrets.USERNAME_PRODUCTION }}
         key: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
         port: 22
-        script: cd /var/www/html/ && rm -r * && git clone -b testing franco-lamas/deploy-ec2
+        script: cd /var/www/html/ && rm -r * && git clone -b testing https://github.com/franco-lamas/deploy-ec2
 
 
 
