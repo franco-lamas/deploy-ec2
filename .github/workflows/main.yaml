@@ -77,11 +77,11 @@ jobs:
   deploy-to-aws:
     name: Copy files to AWS EC2 Testing
     runs-on: ubuntu-22.04
-    continue-on-error:  ${{ secrets.CONTINUE_ERROR_TEST }}
     needs: [gitleaks,copy_paste_detector,phpstan,php_lint]
     environment: 
       name: test
       url: http://deploy-ec2-test.duckdns.org/
+    continue-on-error:  ${{ secrets.CONTINUE_ERROR_TEST }}
     steps:
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v0.1.6
@@ -100,11 +100,11 @@ jobs:
   deploy-to-Prod:
     name: Copy files to AWS EC2 Prod
     runs-on: ubuntu-22.04
-    continue-on-error: ${{ secrets.CONTINUE_ERROR_TEST }}
     needs: [gitleaks,copy_paste_detector,phpstan,php_lint]
     environment: 
       name: prod
       url: http://deploy-ec2-prod.duckdns.org/
+    continue-on-error: ${{ secrets.CONTINUE_ERROR_PROD }}
     steps:
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v0.1.6
