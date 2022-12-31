@@ -92,7 +92,7 @@ jobs:
         port: 22
         script: |
           cd /var/www/html/ && rm -r *
-          git clone -b tesing https://github.com/franco-lamas/deploy-ec2 
+          git clone -b testing https://github.com/franco-lamas/deploy-ec2 
           mv -v /var/www/html/deploy-ec2/src/* /var/www/html/ 
           rm -rf deploy-ec2
 
