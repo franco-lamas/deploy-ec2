@@ -73,47 +73,49 @@ jobs:
           dir: "src/"
 
 # ------End of extracted Code-------
-          
-  deploy-to-testing:
+
+  deploy-to-aws:
     name: Copy files to AWS EC2 Testing
     runs-on: ubuntu-22.04
+    
     needs: [gitleaks,copy_paste_detector,phpstan,php_lint]
     environment: 
       name: test
       url: http://deploy-ec2-test.duckdns.org/
     steps:
-
-
-    - name: Checkout the files
-      uses: actions/checkout@v2
-    - name: Copy folder content recursively to remote
-      uses: garygrossgarten/github-action-scp@release
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@v0.1.6
       with:
-        local: src
-        remote: ${{ secrets.TARGET_DIR_PRODUCTION }} 
         host: ${{ secrets.HOST_DNS_PRODUCTION }}
         username: ${{ secrets.USERNAME_PRODUCTION }}
-        privateKey: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
-        rmRemote: true
+        key: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
+        port: 22
+        script: |
+          cd /var/www/html/ && rm -r *
+          git clone -b testing https://github.com/franco-lamas/deploy-ec2 
+          mv -v /var/www/html/deploy-ec2/src/* /var/www/html/ 
+          rm -rf deploy-ec2
 
 
-  deploy-to-prod:
-    name: Copy files to AWS EC2 Testing
+  deploy-to-Prod:
+    name: Copy files to AWS EC2 Prod
     runs-on: ubuntu-22.04
+    
     needs: [gitleaks,copy_paste_detector,phpstan,php_lint]
     environment: 
       name: prod
-      url: http://deploy-ec2-test.duckdns.org/
+      url: http://deploy-ec2-prod.duckdns.org/
     steps:
-    - name: Checkout the files
-      uses: actions/checkout@v2
-    - name: Copy folder content recursively to remote
-      uses: garygrossgarten/github-action-scp@release
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@v0.1.6
       with:
-        local: src
-        remote: ${{ secrets.TARGET_DIR_PRODUCTION }} 
         host: ${{ secrets.HOST_DNS_PRODUCTION }}
         username: ${{ secrets.USERNAME_PRODUCTION }}
-        privateKey: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
-        rmRemote: true
+        key: ${{ secrets.EC2_SSH_KEY_PRODUCTION }}
+        port: 22
+        script: |
+          cd /var/www/html/ && rm -r *
+          git clone https://github.com/franco-lamas/deploy-ec2 
+          mv -v /var/www/html/deploy-ec2/src/* /var/www/html/ 
+          rm -rf deploy-ec2
 
