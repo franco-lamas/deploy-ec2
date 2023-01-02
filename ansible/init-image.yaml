@@ -12,7 +12,8 @@
         pkg:
           - apache2
           - ufw
-          - snap
+          - unzip
+          - snap 
         state: present
     - name: "Create document root"
       file:
